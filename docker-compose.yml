@@ -1,0 +1,31 @@
+
+services:
+  db:
+    image: mariadb:10.6
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: powerdns
+      MYSQL_USER: pdns
+      MYSQL_PASSWORD: geheim
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  powerdns:
+    build: .
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_USER: pdns
+      DB_PASSWORD: geheim
+      DB_NAME: powerdns
+      API_KEY: changeme
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
+    restart: unless-stopped
+
+volumes:
+  db_data:
