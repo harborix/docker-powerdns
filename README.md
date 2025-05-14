@@ -1,4 +1,4 @@
-# accom/powerdns
+# harborix/powerdns
 
 Multi-architecture Docker image for the [PowerDNS Authoritative Server](https://doc.powerdns.com/authoritative/), packaged for use with MySQL/MariaDB as backend.
 
