@@ -1,11 +1,9 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 
-# Wenn ENV-Ersetzung gewünscht ist, verarbeite pdns.conf als Template
-if [ -f /etc/powerdns/pdns.conf ]; then
-  envsubst < /etc/powerdns/pdns.conf > /etc/powerdns/pdns.conf.rendered
-  mv /etc/powerdns/pdns.conf.rendered /etc/powerdns/pdns.conf
+if [ -f /etc/powerdns/pdns.conf.template ]; then
+  echo "Substituting environment variables in pdns.conf.template..."
+  envsubst < /etc/powerdns/pdns.conf.template > /etc/powerdns/pdns.conf
 fi
 
-# Starte PowerDNS im Vordergrund ohne Guardian
-exec /usr/sbin/pdns_server --daemon=no --guardian=no
+exec pdns_server --config-dir=/etc/powerdns
